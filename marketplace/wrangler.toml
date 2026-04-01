@@ -1,0 +1,12 @@
+name = "marketplace-affiliationpro"
+main = "index.js"
+compatibility_date = "2024-12-01"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = "public"
+
+[[d1_databases]]
+binding = "DB_AFFILIATION"
+database_name = "affiliation-pro-db"
+database_id = "0b22a4ba-4d5f-404d-b2e0-4838de6b1822"
