@@ -1325,26 +1325,7 @@ document.getElementById('modalOverlay').addEventListener('click', (e) => {
 });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
-/* Copy affiliate link */
-document.getElementById('copyLinkBtn').addEventListener('click', () => {
-  const text = document.getElementById('affiliateLink').textContent;
-  if (!text || text.includes('Rejoins')) {
-    showToast('Rejoins d\'abord pour obtenir ton lien !');
-    return;
-  }
-  navigator.clipboard.writeText(text).then(() => {
-    showToast('✅ Lien copié !');
-  }).catch(() => {
-    // Fallback
-    const input = document.createElement('input');
-    input.value = text;
-    document.body.appendChild(input);
-    input.select();
-    document.execCommand('copy');
-    document.body.removeChild(input);
-    showToast('✅ Lien copié !');
-  });
-});
+/* (affiliate link copy removed — link is no longer public on marketplace) */
 
 /* ══════════════════════════════════════════════════════════════════
    FILTERS
