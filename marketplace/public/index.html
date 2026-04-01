@@ -899,6 +899,15 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
         </tr>
       </table>
 
+      <!-- Affiliate link -->
+      <div class="affiliate-box">
+        <label>Ton lien d'affiliation</label>
+        <div class="affiliate-link-row">
+          <input type="text" class="affiliate-link-input" id="affiliateLink" value="Rejoins l'Ambassadeur pour obtenir ton lien !" readonly>
+          <button class="btn-copy" id="copyLinkBtn">Copier</button>
+        </div>
+      </div>
+
       <!-- Promo code visible -->
       <div class="promo-code-box" id="promoBox">
         <label>Ton code promo ambassadeur</label>
@@ -1302,6 +1311,15 @@ async function openModal(productId) {
   document.getElementById('comm3Amt').textContent = formatCommAmount(price, p.commission_n3);
   document.getElementById('comm3Pct').textContent = p.commission_n3 + '%';
 
+  // Affiliate link
+  const affInput = document.getElementById('affiliateLink');
+  if (p.affiliate_link) {
+    affInput.value = p.affiliate_link;
+  } else {
+    affInput.value = "Rejoins l'Ambassadeur pour obtenir ton lien !";
+  }
+
+  // Promo code
   const promoBox = document.getElementById('promoBox');
   if (p.promo_code) {
     promoBox.style.display = 'block';
@@ -1325,7 +1343,25 @@ document.getElementById('modalOverlay').addEventListener('click', (e) => {
 });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
-/* (affiliate link copy removed — link is no longer public on marketplace) */
+/* Copy affiliate link */
+document.getElementById('copyLinkBtn').addEventListener('click', () => {
+  const text = document.getElementById('affiliateLink').value;
+  if (!text || text.includes('Rejoins')) {
+    showToast('Rejoins d\'abord pour obtenir ton lien !');
+    return;
+  }
+  navigator.clipboard.writeText(text).then(() => {
+    showToast('✅ Lien copié !');
+  }).catch(() => {
+    const input = document.createElement('input');
+    input.value = text;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand('copy');
+    document.body.removeChild(input);
+    showToast('✅ Lien copié !');
+  });
+});
 
 /* ══════════════════════════════════════════════════════════════════
    FILTERS
