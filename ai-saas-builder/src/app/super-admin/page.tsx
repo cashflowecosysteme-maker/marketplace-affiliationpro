@@ -391,7 +391,11 @@ export default function SuperAdminPage() {
       const result = await response.json()
       if (!response.ok) throw new Error(result.error)
 
-      toast.success('Utilisateur créé avec succès')
+      if (result.promoted) {
+        toast.success('✨ Affilié promu en Admin avec succès !')
+      } else {
+        toast.success('Utilisateur créé avec succès')
+      }
       setNewUser({ email: '', password: '', fullName: '', role: 'admin', subdomain: '', adminId: '' })
       fetchData()
     } catch (error) {

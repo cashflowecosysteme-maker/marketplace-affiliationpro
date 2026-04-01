@@ -489,11 +489,11 @@ export default function MarketplaceManager({ mode }: MarketplaceManagerProps) {
             <div>
               <p className="text-white text-sm font-medium">Voir le Marketplace en direct</p>
               <p className="text-zinc-500 text-xs">
-                marketplace-affiliationpro.cashflowecosysteme.workers.dev
+                marketplace-affiliationpro.com
               </p>
             </div>
             <a
-              href="https://marketplace-affiliationpro.cashflowecosysteme.workers.dev"
+              href="https://marketplace-affiliationpro.com"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -508,7 +508,7 @@ export default function MarketplaceManager({ mode }: MarketplaceManagerProps) {
 
       {/* Create/Edit Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="glass-card border-purple-500/20 bg-[#0c1222] text-white max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="glass-card border-purple-500/20 bg-[#0c1222] text-white overflow-y-auto" style={{ maxWidth: '1152px', maxHeight: '95vh' }}>
           <DialogHeader>
             <DialogTitle className="text-white text-lg">
               {editingProduct ? 'Modifier le produit' : 'Ajouter un produit'}
