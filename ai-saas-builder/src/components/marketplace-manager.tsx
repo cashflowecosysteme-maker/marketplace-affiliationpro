@@ -29,6 +29,8 @@ import {
   ExternalLink,
   DollarSign,
   Package,
+  Upload,
+  ImageIcon,
 } from 'lucide-react'
 import { toast } from 'sonner'
 
@@ -96,6 +98,7 @@ export default function MarketplaceManager({ mode }: MarketplaceManagerProps) {
   const [isSaving, setIsSaving] = useState(false)
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const [statusFilter, setStatusFilter] = useState('')
+  const [isUploading, setIsUploading] = useState(false)
 
   const fetchProducts = useCallback(async () => {
     try {
@@ -225,6 +228,79 @@ export default function MarketplaceManager({ mode }: MarketplaceManagerProps) {
     new Intl.NumberFormat('fr-CA', { style: 'currency', currency: 'CAD' }).format(amount)
 
   const getCategoryIcon = (cat: Category | null) => cat?.icon || '📦'
+
+  // Resize image to social media dimensions (1080x1080) with client-side Canvas
+  const resizeImageToSocialMedia = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        const img = new Image()
+        img.onload = () => {
+          const canvas = document.createElement('canvas')
+          const ctx = canvas.getContext('2d')
+          if (!ctx) { reject('Canvas non supporté'); return }
+
+          // Social media standard: 1080x1080 (Instagram square)
+          const maxSize = 1080
+          let width = img.width
+          let height = img.height
+
+          // Resize only if larger than 1080px on either side
+          if (width > maxSize || height > maxSize) {
+            if (width > height) {
+              height = Math.round((height * maxSize) / width)
+              width = maxSize
+            } else {
+              width = Math.round((width * maxSize) / height)
+              height = maxSize
+            }
+          }
+
+          canvas.width = width
+          canvas.height = height
+          ctx.drawImage(img, 0, 0, width, height)
+
+          // Export as JPEG at 85% quality (good balance quality/size)
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.85)
+          resolve(dataUrl)
+        }
+        img.onerror = () => reject('Erreur de chargement de l\'image')
+        img.src = e.target?.result as string
+      }
+      reader.onerror = () => reject('Erreur de lecture du fichier')
+      reader.readAsDataURL(file)
+    })
+  }
+
+  // Handle image upload (file input or drag & drop)
+  const handleImageUpload = async (file: File) => {
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml']
+    if (!allowedTypes.includes(file.type)) {
+      toast.error('Format non supporté (JPG, PNG, GIF, WebP)')
+      return
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error('Image trop volumineuse (max 10 MB)')
+      return
+    }
+
+    setIsUploading(true)
+    try {
+      // Resize client-side to 1080x1080 social media format
+      const resizedDataUrl = await resizeImageToSocialMedia(file)
+      // Store directly — no server upload needed for base64
+      setForm({ ...form, image_url: resizedDataUrl })
+      toast.success('Image ajoutée !')
+    } catch (err) {
+      toast.error('Erreur lors du traitement de l\'image')
+    } finally {
+      setIsUploading(false)
+    }
+  }
+
+  // Drag & drop handlers
+  const [isDragging, setIsDragging] = useState(false)
+  const fileInputRef = { current: null as HTMLInputElement | null }
 
   return (
     <div className="space-y-6">
@@ -652,23 +728,79 @@ export default function MarketplaceManager({ mode }: MarketplaceManagerProps) {
               )}
             </div>
 
-            {/* Image URL */}
+            {/* Image Upload — Mari Friendly : simple drag & drop ou clic */}
             <div className="space-y-2">
-              <Label className="text-zinc-300 text-sm">URL de l&apos;image</Label>
-              <Input
-                placeholder="https://example.com/mon-image.png"
-                value={form.image_url}
-                onChange={(e) => setForm({ ...form, image_url: e.target.value })}
-                className="bg-white/5 border-purple-500/20 text-white"
-              />
-              {form.image_url && (
-                <img
-                  src={form.image_url}
-                  alt="Preview"
-                  className="w-32 h-32 object-cover rounded-lg mt-2"
-                  onError={(e) => (e.currentTarget.style.display = 'none')}
-                />
+              <Label className="text-zinc-300 text-sm">Image du produit</Label>
+              <p className="text-zinc-500 text-xs">Glissez votre image ou cliquez pour choisir • Format réseaux sociaux (1080×1080) automatique</p>
+              {!form.image_url ? (
+                <div
+                  onClick={() => fileInputRef.current?.click()}
+                  onDragOver={(e) => { e.preventDefault(); setIsDragging(true) }}
+                  onDragLeave={() => setIsDragging(false)}
+                  onDrop={(e) => {
+                    e.preventDefault(); setIsDragging(false)
+                    const file = e.dataTransfer.files[0]
+                    if (file) handleImageUpload(file)
+                  }}
+                  className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all ${
+                    isDragging
+                      ? 'border-purple-400 bg-purple-500/10'
+                      : 'border-purple-500/30 hover:border-purple-400/60 hover:bg-white/5'
+                  } ${isUploading ? 'opacity-50 pointer-events-none' : ''}`}
+                >
+                  {isUploading ? (
+                    <div className="flex flex-col items-center gap-2">
+                      <Loader2 className="w-8 h-8 animate-spin text-purple-400" />
+                      <p className="text-zinc-400 text-sm">Traitement en cours...</p>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center gap-2">
+                      <Upload className="w-8 h-8 text-purple-400" />
+                      <p className="text-zinc-400 text-sm font-medium">
+                        Glissez votre image ici
+                      </p>
+                      <p className="text-zinc-500 text-xs">
+                        ou cliquez pour parcourir
+                      </p>
+                      <p className="text-zinc-600 text-xs mt-1">
+                        JPG, PNG, GIF, WebP • Jusqu'à 10 MB
+                      </p>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="relative group">
+                  <img
+                    src={form.image_url}
+                    alt="Aperçu"
+                    className="w-48 h-48 object-cover rounded-xl border-2 border-purple-500/20"
+                    onError={(e) => (e.currentTarget.style.display = 'none')}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setForm({ ...form, image_url: '' })}
+                    className="absolute -top-2 -right-2 w-7 h-7 rounded-full bg-red-500 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 shadow-lg"
+                    title="Retirer l'image"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                  <p className="text-zinc-500 text-xs mt-2 flex items-center gap-1">
+                    <ImageIcon className="w-3 h-3" />
+                    Cliquez sur X pour changer l'image
+                  </p>
+                </div>
               )}
+              <input
+                ref={(el) => { fileInputRef.current = el }}
+                type="file"
+                accept="image/jpeg,image/png,image/gif,image/webp"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0]
+                  if (file) handleImageUpload(file)
+                  e.target.value = '' // Reset pour pouvoir re-sélectionner la même image
+                }}
+              />
             </div>
 
             {/* Affiliate link */}
