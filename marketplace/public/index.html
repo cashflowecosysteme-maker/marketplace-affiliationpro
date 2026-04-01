@@ -1264,7 +1264,7 @@ function renderProducts(products) {
       </div>
       <div class="card-cta">
         ${p.promo_code ? `<div class="card-promo-code" title="Utilise ce code à l'inscription">🎫 ${escHtml(p.promo_code)}</div>` : ''}
-        <a href="https://affiliationpro.cashflowecosysteme.com/signup" target="_blank" rel="noopener" class="btn-promote" onclick="event.stopPropagation();">Inscription gratuite</a>
+        <a class="btn-promote" onclick="event.stopPropagation(); openModal('${p.id}');">Inscription gratuite</a>
       </div>
     </div>`;
   }).join('');
