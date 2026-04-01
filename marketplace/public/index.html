@@ -330,16 +330,25 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
 .card-cta {
   padding: 14px 18px;
 }
+.card-promo-code {
+  text-align:center; padding: 6px 12px; border-radius: var(--radius-sm);
+  background: rgba(123,92,255,.12); border: 1px solid rgba(123,92,255,.25);
+  font-size:.82rem; font-weight:700; color: var(--primary-light);
+  font-family:'Space Grotesk',monospace; letter-spacing:.5px;
+  margin-bottom:8px;
+}
 .btn-promote {
-  width:100%; padding: 11px 0; border-radius: var(--radius-sm);
+  display:block; width:100%; padding: 11px 0; border-radius: var(--radius-sm);
   background: linear-gradient(135deg, var(--primary), #6d4ce6);
   color:#fff; font-size:.9rem; font-weight:600; text-align:center;
   transition: all var(--transition);
   box-shadow: 0 3px 10px var(--primary-glow);
+  text-decoration:none;
 }
 .btn-promote:hover {
   box-shadow: 0 6px 20px var(--primary-glow);
   transform: translateY(-1px);
+  color:#fff;
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -399,7 +408,7 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
   background: var(--bg-card);
   border-radius: var(--radius);
   border: 1px solid var(--border);
-  width:100%; max-width:620px;
+  width:100%; max-width:880px;
   max-height: 90vh; overflow-y:auto;
   transform:scale(.92) translateY(20px);
   transition: transform .35s cubic-bezier(.4,0,.2,1);
@@ -890,21 +899,14 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
         </tr>
       </table>
 
-      <div class="affiliate-box" id="affiliateBox">
-        <label>Ton lien affilié</label>
-        <div class="affiliate-link-row">
-          <div class="affiliate-link-input" id="affiliateLink"></div>
-          <button class="btn-copy" id="copyLinkBtn">Copier</button>
-        </div>
-      </div>
-
+      <!-- Promo code visible -->
       <div class="promo-code-box" id="promoBox">
-        <label>Code promo</label>
+        <label>Ton code promo ambassadeur</label>
         <div class="promo-code-value" id="promoCode"></div>
       </div>
 
-      <a href="https://affiliationpro.cashflowecosysteme.com/ambassadeur" class="modal-cta" target="_blank" rel="noopener">
-        Rejoindre pour promouvoir →
+      <a href="https://affiliationpro.cashflowecosysteme.com/signup" class="modal-cta" target="_blank" rel="noopener">
+        🚀 Inscription gratuite — Deviens ambassadeur
       </a>
     </div>
   </div>
@@ -1252,25 +1254,18 @@ function renderProducts(products) {
         <span class="card-sales">${p.sales_count} ventes</span>
       </div>
       <div class="card-cta">
-        <button class="btn-promote" data-id="${p.id}">Promouvoir</button>
+        ${p.promo_code ? `<div class="card-promo-code" title="Utilise ce code à l'inscription">🎫 ${escHtml(p.promo_code)}</div>` : ''}
+        <a href="https://affiliationpro.cashflowecosysteme.com/signup" target="_blank" rel="noopener" class="btn-promote" onclick="event.stopPropagation();">Inscription gratuite</a>
       </div>
     </div>`;
   }).join('');
 
-  // Bind card clicks
+  // Bind card clicks (open modal)
   grid.querySelectorAll('.product-card').forEach(card => {
     card.addEventListener('click', (e) => {
-      // Don't open modal if clicking the promote button (button has its own handler)
+      // Don't open modal if clicking the Inscription link
       if (e.target.closest('.btn-promote')) return;
       openModal(card.dataset.id);
-    });
-  });
-
-  // Bind promote buttons
-  grid.querySelectorAll('.btn-promote').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      openModal(btn.dataset.id);
     });
   });
 }
@@ -1306,9 +1301,6 @@ async function openModal(productId) {
   document.getElementById('comm2Pct').textContent = p.commission_n2 + '%';
   document.getElementById('comm3Amt').textContent = formatCommAmount(price, p.commission_n3);
   document.getElementById('comm3Pct').textContent = p.commission_n3 + '%';
-
-  const link = p.affiliate_link || '';
-  document.getElementById('affiliateLink').textContent = link || 'Rejoins pour obtenir ton lien';
 
   const promoBox = document.getElementById('promoBox');
   if (p.promo_code) {

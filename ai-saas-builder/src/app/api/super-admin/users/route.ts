@@ -29,8 +29,57 @@ export async function POST(request: NextRequest) {
     }
     const { db } = verification
 
-    const { email, password, fullName, role, subdomain, adminId } = await request.json()
+    const { email, password, fullName, role, subdomain, adminId, promoteUserId } = await request.json()
 
+    // ─── PROMOTE BY USER ID (from Teams tab) ───
+    if (promoteUserId && role === 'admin') {
+      const target = await db
+        .prepare('SELECT id, role, email, full_name FROM users WHERE id = ?')
+        .bind(promoteUserId)
+        .first() as { id: string; role: string; email: string; full_name: string } | null
+
+      if (!target) {
+        return NextResponse.json({ error: 'Utilisateur introuvable' }, { status: 404 })
+      }
+      if (target.role === 'admin') {
+        return NextResponse.json({ error: 'Cet utilisateur est déjà admin' }, { status: 400 })
+      }
+      if (target.role === 'super_admin') {
+        return NextResponse.json({ error: 'Impossible de modifier un super admin' }, { status: 400 })
+      }
+
+      const now = new Date().toISOString()
+      const webhookSecret = Array.from(crypto.getRandomValues(new Uint8Array(32))).map(b => b.toString(16).padStart(2, '0')).join('')
+
+      await db.prepare(`UPDATE users SET role = 'admin', admin_id = NULL, webhook_secret = ?, updated_at = ? WHERE id = ?`)
+        .bind(webhookSecret, now, target.id)
+        .run()
+
+      // Create affiliate record if missing
+      const program = await db
+        .prepare('SELECT id FROM programs WHERE is_active = ? LIMIT 1')
+        .bind(1)
+        .first()
+      if (program) {
+        const existingAffiliate = await db
+          .prepare('SELECT id FROM affiliates WHERE user_id = ?')
+          .bind(target.id)
+          .first()
+        if (!existingAffiliate) {
+          const affiliateId = generateId()
+          const affiliateCode = await generateUniqueAffiliateCode(db)
+          const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://affiliationpro.cashflowecosysteme.com'
+          await db
+            .prepare('INSERT INTO affiliates (id, program_id, user_id, affiliate_link, status, total_earnings, total_referrals, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)')
+            .bind(affiliateId, program.id, target.id, `${siteUrl}/r/${affiliateCode}`, 'active', 0, 0, now)
+            .run()
+        }
+      }
+
+      return NextResponse.json({ success: true, userId: target.id, promoted: true })
+    }
+
+    // ─── CREATE NEW USER or PROMOTE BY EMAIL ───
     if (!email || !password || !fullName || !role) {
       return NextResponse.json({ error: 'Champs requis manquants' }, { status: 400 })
     }

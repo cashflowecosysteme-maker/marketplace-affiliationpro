@@ -215,6 +215,32 @@ export default function SuperAdminPage() {
     })
   }
 
+  // Promote an affiliate to admin via API (uses the same promote logic)
+  const promoteToAdmin = async (userId: string, userName: string) => {
+    if (!confirm(`Promouvoir ${userName} en tant qu'Admin ?`)) return
+    try {
+      const response = await fetch('/api/super-admin/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: '', // Not used for promotion — the API detects existing user
+          password: '',
+          fullName: '',
+          role: 'admin',
+          promoteUserId: userId, // Signal to the API to promote this specific user
+          subdomain: '',
+          adminId: '',
+        }),
+      })
+      const result = await response.json()
+      if (!response.ok) throw new Error(result.error)
+      toast.success(`✨ ${userName} promu en Admin !`)
+      fetchData()
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Erreur')
+    }
+  }
+
   const fetchData = useCallback(async (search?: string) => {
     try {
       const url = search ? `/api/super-admin?search=${encodeURIComponent(search)}` : '/api/super-admin'
@@ -1040,6 +1066,19 @@ export default function SuperAdminPage() {
                                     <Badge className="bg-blue-500/10 text-blue-300 border-blue-500/20 text-xs flex-shrink-0">
                                       Niveau 2
                                     </Badge>
+                                    <Button
+                                      variant="outline"
+                                      size="sm"
+                                      className="h-7 border-amber-500/30 text-amber-400 hover:bg-amber-500/10 text-xs flex-shrink-0"
+                                      onClick={(e) => {
+                                        e.stopPropagation()
+                                        promoteToAdmin(l2.id, l2.full_name || l2.email)
+                                      }}
+                                      title="Promouvoir en Admin"
+                                    >
+                                      <Crown className="w-3 h-3 mr-1" />
+                                      <span className="hidden sm:inline">Promouvoir</span>
+                                    </Button>
                                     {hasL3 && (
                                       <button
                                         onClick={(e) => { e.stopPropagation(); toggleL2(l2.id) }}
@@ -1074,6 +1113,19 @@ export default function SuperAdminPage() {
                                             <p className="text-zinc-500 text-xs truncate">{l3.email}</p>
                                           </div>
                                           <div className="flex items-center gap-2 flex-shrink-0">
+                                            <Button
+                                              variant="outline"
+                                              size="sm"
+                                              className="h-6 border-amber-500/30 text-amber-400 hover:bg-amber-500/10 text-xs px-2"
+                                              onClick={(e) => {
+                                                e.stopPropagation()
+                                                promoteToAdmin(l3.id, l3.full_name || l3.email)
+                                              }}
+                                              title="Promouvoir en Admin"
+                                            >
+                                              <Crown className="w-2.5 h-2.5 mr-1" />
+                                              <span className="hidden sm:inline">Promouvoir</span>
+                                            </Button>
                                             <Badge className={`text-xs ${l3.paypal_email ? 'bg-green-500/10 text-green-400 border-green-500/20' : 'bg-zinc-500/10 text-zinc-400 border-zinc-500/20'}`}>
                                               <CreditCard className="w-2.5 h-2.5 mr-1" />
                                               {l3.paypal_email ? 'PayPal ✓' : 'PayPal ✗'}
