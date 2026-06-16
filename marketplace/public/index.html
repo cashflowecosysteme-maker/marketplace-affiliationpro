@@ -3,10 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AffiliationPro Marketplace — Trouve ta prochaine opportunité</title>
-<meta name="description" content="Découvre les meilleurs produits et formations pour développer ton business d'affiliation. Gagne des commissions sur 3 niveaux avec AffiliationPro.">
+<title>Le Miroir des Aidantes — Les praticiennes qui t'accompagnent</title>
+<meta name="description" content="Rencontre les praticiennes, accompagnatrices et thérapeutes du Miroir des Aidantes. Des femmes qui prennent soin des autres, réunies pour marcher à tes côtés, soutenues par NyXia.">
 <link rel="icon" type="image/png" href="/assets/NyXia-FavIcon.png">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ══════════════════════════════════════════════════════════════
    RESET & BASE
@@ -14,25 +16,36 @@
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
 :root {
-  --bg-deep: #0F1C3F;
-  --bg: #0F1C3F;
-  --bg-card: #221445;
-  --bg-card-hover: #2a1a55;
+  --bg-deep: #060a18;
+  --bg: #060a18;
+  --bg-card: #0e1430;
+  --bg-card-hover: #141b3d;
   --primary: #7B5CFF;
-  --primary-light: #9b7dff;
+  --secondary: #5A6CFF;
+  --primary-light: #a78bfa;
   --primary-glow: rgba(123,92,255,.35);
+  --gold: #F4C842;
   --accent-green: #34d399;
   --accent-green-dim: #059669;
   --text: #f1f0ff;
-  --text-secondary: #b0a8d0;
+  --text-secondary: #b9b3d6;
   --text-muted: #7c73a0;
   --border: rgba(123,92,255,.18);
-  --radius: 14px;
-  --radius-sm: 8px;
-  --shadow: 0 8px 32px rgba(0,0,0,.35);
+  --radius: 16px;
+  --radius-sm: 9px;
+  --shadow: 0 8px 32px rgba(0,0,0,.45);
   --shadow-lg: 0 16px 48px rgba(123,92,255,.15);
   --transition: .3s cubic-bezier(.4,0,.2,1);
 }
+
+/* NyXia display typography — Cormorant Garamond for titles, Outfit elsewhere */
+.hero h1, .vendeur-question, .footer-title, .footer-title-text,
+.modal-title, .card-title, .empty-state h3, .nx-welcome h4 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
+  letter-spacing: .3px;
+}
+.nx-name { font-family: 'Outfit', sans-serif; }
 
 html { scroll-behavior: smooth; }
 
@@ -66,7 +79,7 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
    ══════════════════════════════════════════════════════════════ */
 .header {
   position: sticky; top:0; z-index:100;
-  background: rgba(15,28,63,.7);
+  background: rgba(6,10,24,.7);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border-bottom: 1px solid var(--border);
@@ -100,7 +113,7 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
 .btn-outline:hover { border-color: var(--primary); color: #fff; background: rgba(123,92,255,.1); }
 .btn-primary {
   padding: 9px 22px; border-radius: var(--radius-sm);
-  background: linear-gradient(135deg, var(--primary), #6d4ce6);
+  background: linear-gradient(135deg, var(--primary), #5A6CFF);
   color: #fff; font-size: .875rem; font-weight: 600;
   box-shadow: 0 4px 15px var(--primary-glow);
   transition: all var(--transition);
@@ -137,7 +150,7 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
 .social-btn-perso svg { width:18px; height:18px; fill:currentColor }
 .btn-join {
   padding: 9px 22px; border-radius: var(--radius-sm);
-  background: linear-gradient(135deg, var(--primary), #6d4ce6);
+  background: linear-gradient(135deg, var(--primary), #5A6CFF);
   color: #fff; font-size: .875rem; font-weight: 700;
   box-shadow: 0 4px 15px var(--primary-glow);
   transition: all var(--transition);
@@ -208,7 +221,7 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
 }
 .pill:hover { border-color: var(--primary); color:#fff; }
 .pill.active {
-  background: linear-gradient(135deg, var(--primary), #6d4ce6);
+  background: linear-gradient(135deg, var(--primary), #5A6CFF);
   border-color: transparent; color:#fff;
   box-shadow: 0 2px 12px var(--primary-glow);
 }
@@ -222,7 +235,7 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
   width:100%; padding: 10px 16px 10px 42px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
-  background: rgba(34,20,69,.7);
+  background: rgba(14,20,48,.7);
   color: var(--text); font-size:.9rem;
   transition: all var(--transition);
 }
@@ -237,7 +250,7 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
   padding: 10px 36px 10px 14px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
-  background: rgba(34,20,69,.7);
+  background: rgba(14,20,48,.7);
   color: var(--text); font-size:.875rem;
   appearance:none;
   background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%239b7dff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -282,7 +295,7 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
   to   { opacity:1; transform:translateY(0); }
 }
 .card-image-wrap {
-  position:relative; width:100%; aspect-ratio:16/9; overflow:hidden; background:#130a28;
+  position:relative; width:100%; aspect-ratio:16/9; overflow:hidden; background:#0c1228;
 }
 .card-image-wrap img {
   width:100%; height:100%; object-fit:cover;
@@ -292,7 +305,7 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
 .card-badge {
   position:absolute; top:10px; left:10px;
   padding: 4px 10px; border-radius:50px;
-  background: rgba(13,1,25,.78);
+  background: rgba(8,12,28,.78);
   backdrop-filter: blur(6px);
   font-size:.72rem; font-weight:600; color: var(--primary-light);
   border: 1px solid rgba(123,92,255,.25);
@@ -334,12 +347,12 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
   text-align:center; padding: 6px 12px; border-radius: var(--radius-sm);
   background: rgba(123,92,255,.12); border: 1px solid rgba(123,92,255,.25);
   font-size:.82rem; font-weight:700; color: var(--primary-light);
-  font-family:'Space Grotesk',monospace; letter-spacing:.5px;
+  font-family:'Outfit',sans-serif; letter-spacing:.5px;
   margin-bottom:8px;
 }
 .btn-promote {
   display:block; width:100%; padding: 11px 0; border-radius: var(--radius-sm);
-  background: linear-gradient(135deg, var(--primary), #6d4ce6);
+  background: linear-gradient(135deg, var(--primary), #5A6CFF);
   color:#fff; font-size:.9rem; font-weight:600; text-align:center;
   transition: all var(--transition);
   box-shadow: 0 3px 10px var(--primary-glow);
@@ -363,13 +376,13 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
 }
 .skeleton-img {
   width:100%; aspect-ratio:16/9;
-  background: linear-gradient(110deg, #1e1040 8%, #2a1858 18%, #1e1040 33%);
+  background: linear-gradient(110deg, #0c1430 8%, #141b3d 18%, #0c1430 33%);
   background-size: 200% 100%;
   animation: shimmer 1.5s linear infinite;
 }
 .skeleton-line {
   height:14px; border-radius:6px; margin:10px 18px;
-  background: linear-gradient(110deg, #1e1040 8%, #2a1858 18%, #1e1040 33%);
+  background: linear-gradient(110deg, #0c1430 8%, #141b3d 18%, #0c1430 33%);
   background-size: 200% 100%;
   animation: shimmer 1.5s linear infinite;
 }
@@ -420,7 +433,7 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
 .modal-close {
   position:absolute; top:14px; right:14px;
   width:36px; height:36px; border-radius:50%;
-  background:rgba(13,1,25,.7); backdrop-filter:blur(6px);
+  background:rgba(8,12,28,.7); backdrop-filter:blur(6px);
   color:#fff; font-size:1.2rem;
   display:flex; align-items:center; justify-content:center;
   transition: all var(--transition); z-index:2;
@@ -429,7 +442,7 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
 .modal-close:hover { background:var(--primary); transform:rotate(90deg); }
 .modal-image {
   width:100%; aspect-ratio:16/9; object-fit:cover; border-radius: var(--radius) var(--radius) 0 0;
-  background:#130a28;
+  background:#0c1228;
 }
 .modal-body { padding:28px; }
 .modal-category {
@@ -445,6 +458,15 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
   margin-bottom:24px;
   white-space:pre-line;
 }
+.modal-spirit {
+  display:flex; gap:10px; align-items:flex-start;
+  background: rgba(123,92,255,.08);
+  border:1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding:16px 18px; margin-bottom:20px;
+  color: var(--text-secondary); font-size:.9rem; line-height:1.6;
+}
+.modal-spirit span { font-size:1.1rem; line-height:1; }
 .modal-price-box {
   background: rgba(123,92,255,.08);
   border:1px solid var(--border);
@@ -517,7 +539,7 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
 .modal-cta {
   display:block; width:100%; padding:14px;
   border-radius:var(--radius-sm);
-  background: linear-gradient(135deg, var(--primary), #6d4ce6);
+  background: linear-gradient(135deg, var(--primary), #5A6CFF);
   color:#fff; font-size:1rem; font-weight:700; text-align:center;
   box-shadow: 0 4px 18px var(--primary-glow);
   transition: all var(--transition);
@@ -554,7 +576,7 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
 }
 .vendeur-alert span { color:#fff; }
 .vendeur-question {
-  font-family:'Orbitron',monospace;
+  font-family:'Cormorant Garamond',Georgia,serif;
   font-size:clamp(1.8rem,4vw,2.8rem);
   font-weight:900; line-height:1.1;
   letter-spacing:-0.5px;
@@ -582,9 +604,9 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
 .btn-submit-product {
   display:inline-flex; align-items:center; gap:8px;
   padding:16px 36px; border-radius:50px;
-  background:linear-gradient(135deg, var(--primary), #6d4ce6);
+  background:linear-gradient(135deg, var(--primary), #5A6CFF);
   color:#fff; font-size:1rem; font-weight:700;
-  font-family:'Space Grotesk',sans-serif;
+  font-family:'Outfit',sans-serif;
   box-shadow:0 4px 24px var(--primary-glow);
   transition:all var(--transition);
   text-decoration:none;
@@ -602,7 +624,7 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
 .footer {
   position:relative; z-index:1;
   border-top:1px solid var(--border);
-  background: rgba(13,1,25,.5);
+  background: rgba(8,12,28,.5);
 }
 .footer-inner {
   max-width:1280px; margin:0 auto;
@@ -636,7 +658,7 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
 .btn-ambassador {
   display:inline-flex; align-items:center; gap:8px;
   padding:14px 32px; border-radius:50px;
-  background:linear-gradient(135deg, var(--primary), #6d4ce6);
+  background:linear-gradient(135deg, var(--primary), #5A6CFF);
   color:#fff; font-size:.95rem; font-weight:700;
   box-shadow: 0 4px 20px var(--primary-glow);
   transition:all var(--transition);
@@ -693,16 +715,16 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
 /* ══════════════════════════════════════════════════════════════
    NYXIA CHAT WIDGET (exact copy from nyxiapublicationweb.com)
    ══════════════════════════════════════════════════════════════ */
-#nyxia-toggle{position:fixed;bottom:24px;right:24px;width:60px;height:60px;border-radius:50%;border:2px solid rgba(123,92,255,0.5);background:rgba(15,28,63,0.9);backdrop-filter:blur(12px);cursor:pointer;z-index:9999;display:flex;align-items:center;justify-content:center;box-shadow:0 0 30px rgba(123,92,255,0.3);transition:all .25s;padding:0}
+#nyxia-toggle{position:fixed;bottom:24px;right:24px;width:60px;height:60px;border-radius:50%;border:2px solid rgba(123,92,255,0.5);background:rgba(6,10,24,0.9);backdrop-filter:blur(12px);cursor:pointer;z-index:9999;display:flex;align-items:center;justify-content:center;box-shadow:0 0 30px rgba(123,92,255,0.3);transition:all .25s;padding:0}
 #nyxia-toggle:hover{transform:scale(1.1);box-shadow:0 0 50px rgba(123,92,255,0.5)}
 #nyxia-toggle img{width:42px;height:42px;border-radius:50%;object-fit:cover}
 #nyxia-badge{position:absolute;top:-4px;right:-4px;width:20px;height:20px;border-radius:50%;background:#7B5CFF;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid var(--bg1)}
-#nyxia-chat{position:fixed;bottom:96px;right:24px;width:380px;max-width:calc(100vw - 48px);height:520px;max-height:calc(100vh - 140px);background:rgba(15,28,63,0.97);border:1px solid rgba(123,92,255,0.3);border-radius:20px;z-index:9999;display:none;flex-direction:column;backdrop-filter:blur(20px);box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 40px rgba(123,92,255,0.15);overflow:hidden}
+#nyxia-chat{position:fixed;bottom:96px;right:24px;width:380px;max-width:calc(100vw - 48px);height:520px;max-height:calc(100vh - 140px);background:rgba(6,10,24,0.97);border:1px solid rgba(123,92,255,0.3);border-radius:20px;z-index:9999;display:none;flex-direction:column;backdrop-filter:blur(20px);box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 40px rgba(123,92,255,0.15);overflow:hidden}
 #nyxia-chat.open{display:flex;animation:nxSlideIn .3s ease}
 @keyframes nxSlideIn{from{opacity:0;transform:translateY(20px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
 #nyxia-header{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid rgba(123,92,255,0.15);background:rgba(10,18,40,0.6)}
 #nyxia-header img{width:36px;height:36px;border-radius:50%;object-fit:cover;border:1.5px solid rgba(123,92,255,0.4)}
-.nx-name{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:#fff}
+.nx-name{font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:#fff}
 .nx-status{font-size:11px;color:#00E676;display:flex;align-items:center;gap:5px}
 .nx-dot{width:5px;height:5px;border-radius:50%;background:#00E676;box-shadow:0 0 6px #00E676}
 #nyxia-messages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px}
@@ -720,7 +742,7 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
 .nx-msg.user .nx-time{text-align:right;padding-right:2px}
 .nx-welcome{display:flex;flex-direction:column;align-items:center;padding:20px 16px;text-align:center}
 .nx-welcome img{width:56px;height:56px;border-radius:50%;object-fit:cover;margin-bottom:12px;border:1.5px solid rgba(123,92,255,0.3);box-shadow:0 0 20px rgba(123,92,255,0.2)}
-.nx-welcome h4{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;margin-bottom:4px;color:#fff}
+.nx-welcome h4{font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;margin-bottom:4px;color:#fff}
 .nx-welcome p{font-size:12px;color:var(--text-muted);line-height:1.5;max-width:260px}
 .nx-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px;justify-content:center}
 .nx-chip{padding:5px 12px;border-radius:16px;background:rgba(123,92,255,0.1);border:1px solid rgba(123,92,255,0.2);color:#a78bfa;font-size:11px;cursor:pointer;transition:all .15s;font-family:'Outfit',sans-serif}
@@ -795,21 +817,21 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
   <div class="header-inner">
     <div class="logo">
       <div class="logo-icon"><img src="/assets/NyXia-FavIcon.png" alt="NyXia" style="width:28px;height:28px;border-radius:50%;"></div>
-      <span>Publication Web Marketplace</span>
+      <span>Le Miroir des Aidantes</span>
     </div>
     <div class="header-actions">
-      <a href="https://www.publicationcashflow.com" class="btn-outline" target="_blank" rel="noopener">Créer mon site d'affiliation</a>
+      <a href="https://affiliationpro.cashflowecosysteme.com/" class="btn-outline" target="_blank" rel="noopener">Demander mon espace</a>
       <div class="social-icons">
-        <a href="https://www.publication-web.com" target="_blank" class="social-btn-perso web" title="Site Web">
+        <a href="https://marketplace-affiliationpro.com/" target="_blank" class="social-btn-perso web" title="Site Web">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         </a>
-        <a href="https://www.facebook.com/PublicationWeb" target="_blank" class="social-btn-perso facebook" title="Facebook">
+        <a href="https://www.facebook.com/LeMiroirdeNyXia/" target="_blank" class="social-btn-perso facebook" title="Facebook">
           <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
         </a>
-        <a href="https://www.instagram.com/publication.web/" target="_blank" class="social-btn-perso instagram" title="Instagram">
+        <a href="https://www.instagram.com/nyxia_ia/" target="_blank" class="social-btn-perso instagram" title="Instagram">
           <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
         </a>
-        <a href="https://www.tiktok.com/@publicationweb" target="_blank" class="social-btn-perso tiktok" title="TikTok">
+        <a href="https://www.tiktok.com/@lemiroirdenyxia" target="_blank" class="social-btn-perso tiktok" title="TikTok">
           <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/></svg>
         </a>
       </div>
@@ -818,24 +840,24 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
   </div>
 </header>
 
-<!-- Vendeur Premium -->
+<!-- Invitation aux praticiennes -->
 <section class="vendeur-section">
-  <img class="vendeur-nyxia" src="/nyxia-vendeur.png" alt="NyXia IA">
+  <img class="vendeur-nyxia" src="/nyxia-vendeur.png" alt="NyXia">
   <div class="vendeur-content">
-    <div class="vendeur-alert">🔥 Systeme.io a fermé son marketplace → <span>Découvre l'alternative</span></div>
-    <h2 class="vendeur-question">Tu vends quelque chose ?</h2>
-    <p class="vendeur-subtitle">Ajoute ton produit sur le marketplace et laisse notre réseau de <strong>300+ affiliés</strong> le promouvoir pour toi.</p>
-    <p class="vendeur-desc">Bâtis un Empire de Recommandation : Étends ton impact avec ton propre Réseau de Partenaires et des collaborateurs de cœur. Ton espace de cocréation activé en un clic, sans effort, sans connaissance technique, avec une assistance NyXia IA 24 heures 7 jours.</p>
-    <p class="vendeur-alt">L'alternative du marketplace Systeme.io — repensé par et pour les créateurs, les formateurs et les thérapeutes.</p>
-    <a href="https://affiliationpro.cashflowecosysteme.com/signup" class="btn-submit-product" target="_blank" rel="noopener">Rejoindre en tant que Vendeur →</a>
+    <div class="vendeur-alert" style="background:linear-gradient(135deg, rgba(123,92,255,.18), rgba(167,139,250,.12)); border-color:rgba(123,92,255,.3); color:#c4b5fd;">💜 Tu prends soin des autres au quotidien — <span>et toi ?</span></div>
+    <h2 class="vendeur-question">Ton métier mérite d'être vu</h2>
+    <p class="vendeur-subtitle">Si tu es praticienne et membre du <strong>Miroir des Aidantes</strong>, ton espace t'attend ici : ta photo, ta présence, et ton lien d'accompagnement NyXia — sans rien débourser.</p>
+    <p class="vendeur-desc">On porte la charge technique pour toi. Tu restes auprès des tiens, NyXia s'occupe du reste. Et quand quelques personnes te rejoignent par ton lien, ton abonnement t'est offert — puis tu offres exactement la même chose à celles que tu accompagnes. C'est ainsi qu'on se porte les unes les autres.</p>
+    <p class="vendeur-alt">Un espace pensé par et pour les praticiennes, accompagnatrices, thérapeutes et formatrices.</p>
+    <a href="https://www.publication-web.com/nyxia/contact" class="btn-submit-product" target="_blank" rel="noopener">Demander mon espace →</a>
   </div>
 </section>
 
 <!-- Hero -->
 <section class="hero">
-  <h1>Découvre les meilleurs produits à promouvoir</h1>
-  <p>Explore notre sélection de produits et formations. Gagne des commissions et crée ton équipe de collaborateurs de cœur.</p>
-  <a href="https://nyxiapublicationweb.com" target="_blank" rel="noopener" class="nyxia-badge"><img src="/assets/NyXia-FavIcon.png" alt="NyXia"><span>Propulsé par NyXia IA</span></a>
+  <h1>Trouve la praticienne qui marchera à tes côtés</h1>
+  <p>Des femmes qui prennent soin des autres, réunies ici pour t'accompagner. Choisis celle dont la présence te parle — elle continue le chemin avec toi, soutenue par NyXia.</p>
+  <a href="https://nyxiapublicationweb.com" target="_blank" rel="noopener" class="nyxia-badge"><img src="/assets/NyXia-FavIcon.png" alt="NyXia"><span>Propulsé par NyXia</span></a>
 </section>
 
 <!-- Filter Bar -->
@@ -847,14 +869,11 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
   <div class="filter-row">
     <div class="search-box">
       <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="text" id="searchInput" placeholder="Rechercher un produit…">
+      <input type="text" id="searchInput" placeholder="Rechercher une praticienne…">
     </div>
     <select class="sort-select" id="sortSelect">
-      <option value="newest">Pertinence</option>
-      <option value="price-asc">Prix croissant</option>
-      <option value="price-desc">Prix décroissant</option>
-      <option value="commission">Commission</option>
-      <option value="popular">Plus populaire</option>
+      <option value="newest">Récemment arrivées</option>
+      <option value="popular">Les plus consultées</option>
     </select>
   </div>
 </section>
@@ -876,46 +895,12 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
       <h2 class="modal-title" id="modalTitle"></h2>
       <p class="modal-desc" id="modalDesc"></p>
 
-      <div class="modal-price-box">
-        <div class="modal-price-label">Prix</div>
-        <div class="modal-price-value" id="modalPrice"></div>
+      <div class="modal-spirit">
+        <span>💜</span> Une présence pour t'accompagner, pas à pas. Quand tu la rejoins par son lien, tu fais partie du même cercle d'entraide.
       </div>
 
-      <table class="commission-table" id="commissionTable">
-        <tr>
-          <td class="level">Niveau 1 — Tes ventes directes</td>
-          <td class="amount" id="comm1Amt"></td>
-          <td class="pct" id="comm1Pct"></td>
-        </tr>
-        <tr>
-          <td class="level">Niveau 2 — Ventes de ton équipe</td>
-          <td class="amount" id="comm2Amt"></td>
-          <td class="pct" id="comm2Pct"></td>
-        </tr>
-        <tr>
-          <td class="level">Niveau 3 — Équipe de ton équipe</td>
-          <td class="amount" id="comm3Amt"></td>
-          <td class="pct" id="comm3Pct"></td>
-        </tr>
-      </table>
-
-      <!-- Affiliate link -->
-      <div class="affiliate-box">
-        <label>Ton lien d'affiliation</label>
-        <div class="affiliate-link-row">
-          <input type="text" class="affiliate-link-input" id="affiliateLink" value="Rejoins l'Ambassadeur pour obtenir ton lien !" readonly>
-          <button class="btn-copy" id="copyLinkBtn">Copier</button>
-        </div>
-      </div>
-
-      <!-- Promo code visible -->
-      <div class="promo-code-box" id="promoBox">
-        <label>Ton code promo ambassadeur</label>
-        <div class="promo-code-value" id="promoCode"></div>
-      </div>
-
-      <a href="https://affiliationpro.cashflowecosysteme.com/signup" class="modal-cta" target="_blank" rel="noopener">
-        🚀 Inscription gratuite — Deviens ambassadeur
+      <a id="modalCta" href="#" class="modal-cta" target="_blank" rel="noopener">
+        Être accompagnée par elle
       </a>
     </div>
   </div>
@@ -924,18 +909,18 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
-<!-- Footer — Ambassadeur -->
+<!-- Footer — aller plus loin -->
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-content">
-      <h2 class="footer-title"><span class="footer-diamond">💎</span> <span class="footer-title-text">Offre Exclusive</span></h2>
-      <p class="footer-subtitle">Deviens un Ambassadeur</p>
-      <p class="footer-desc">Rembourse rapidement ton investissement en partageant nos produits digitaux d'excellence autour de toi. Et gagne des commissions sur chaque vente !</p>
-      <a href="https://affiliationpro.cashflowecosysteme.com/ambassadeur" class="btn-ambassador" target="_blank" rel="noopener">
-        🌟 Devenir Ambassadeur →
+      <h2 class="footer-title"><span class="footer-diamond">💜</span> <span class="footer-title-text">Toi aussi, prends ta place</span></h2>
+      <p class="footer-subtitle">Ton espace dans le Miroir</p>
+      <p class="footer-desc">Affiche ton métier, porte ton lien d'accompagnement NyXia, et laisse l'entraide faire son chemin. Quand des personnes te rejoignent par ton lien, ton abonnement t'est offert — et tu offres la même chose à celles que tu accompagnes. Envie d'aller plus loin et de bâtir ta propre équipe avec tes propres créations ? C'est possible aussi.</p>
+      <a href="https://www.publication-web.com/nyxia/contact" class="btn-ambassador" target="_blank" rel="noopener">
+        💜 Demander mon espace →
       </a>
     </div>
-    <img class="footer-nyxia" src="/assets/NyXia-27droite.png" alt="NyXia IA">
+    <img class="footer-nyxia" src="/assets/NyXia-27droite.png" alt="NyXia">
   </div>
 </footer>
 
@@ -995,7 +980,7 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
   }
   function draw(){
     const grad=ctx.createLinearGradient(0,0,canvas.width,canvas.height);
-    grad.addColorStop(0,'#0F1C3F');grad.addColorStop(0.5,'#131F4A');grad.addColorStop(1,'#0F1C3F');
+    grad.addColorStop(0,'#060a18');grad.addColorStop(0.5,'#0a1124');grad.addColorStop(1,'#060a18');
     ctx.fillStyle=grad;ctx.fillRect(0,0,canvas.width,canvas.height);
     const cg=ctx.createRadialGradient(canvas.width*0.6,canvas.height*0.3,0,canvas.width*0.6,canvas.height*0.3,canvas.width*0.5);
     cg.addColorStop(0,'rgba(62,45,122,0.18)');cg.addColorStop(1,'rgba(62,45,122,0)');
@@ -1036,74 +1021,46 @@ let allProducts = [];
    FALLBACK DATA (shown if D1 is empty or API unreachable)
    ══════════════════════════════════════════════════════════════════ */
 const FALLBACK_CATEGORIES = [
-  { id:1, name:'Formations', slug:'formations', icon:'🎓', sort_order:1 },
+  { id:1, name:'Accompagnement', slug:'accompagnement', icon:'💜', sort_order:1 },
   { id:2, name:'Coaching', slug:'coaching', icon:'🤝', sort_order:2 },
   { id:3, name:'Mieux-être', slug:'mieux-etre', icon:'🧘', sort_order:3 },
-  { id:4, name:'Spiritualité', slug:'spiritualite', icon:'✨', sort_order:4 },
-  { id:5, name:'Livres & Ebook', slug:'livres-ebook', icon:'📚', sort_order:5 },
-  { id:6, name:'Marketing digital', slug:'marketing-digital', icon:'📊', sort_order:6 },
+  { id:4, name:'Thérapie', slug:'therapie', icon:'🌿', sort_order:4 },
+  { id:5, name:'Spiritualité', slug:'spiritualite', icon:'✨', sort_order:5 },
+  { id:6, name:'Formation', slug:'formation', icon:'🎓', sort_order:6 },
 ];
 
 const FALLBACK_PRODUCTS = [
   {
-    id:'demo-1', category_id:1, category_name:'Formations', category_slug:'formations', category_icon:'🎓',
-    title:'Formation Affiliation Complète 2024',
-    description_short:'Apprends à créer et gérer ton business d\'affiliation de A à Z. Plus de 40 heures de contenu vidéo.',
-    description_long:'Cette formation complète couvre tout ce dont tu as besoin pour lancer et scaler ton business d\'affiliation.\n\n✅ Stratégies de marketing digital\n✅ Création de ton premier tunnel de vente\n✅ Gestion des réseaux sociaux\n✅ Publicité payante (Facebook Ads)\n✅ E-mail marketing\n✅ Plus de 40 heures de contenu vidéo\n✅ Accès à la communauté privée\n✅ Support continu',
-    image_url:'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&h=340&fit=crop',
-    price:497, commission_n1:25, commission_n2:10, commission_n3:5,
-    affiliate_link:'https://affiliationpro.cashflowecosysteme.com/ref/formations-complete',
-    promo_code:'BIENVENUE20', sales_count:342, views_count:5200, status:'active'
+    id:'demo-1', category_id:1, category_name:'Accompagnement', category_slug:'accompagnement', category_icon:'💜',
+    title:'Marie-Soleil — Accompagnante bienveillante',
+    description_short:'Un espace doux pour souffler, déposer ce qui pèse et retrouver ton élan, à ton rythme.',
+    description_long:'Je marche aux côtés des femmes qui prennent soin de tout le monde et s\'oublient un peu en chemin.\n\nEnsemble, on prend le temps :\n• d\'écouter ce qui a besoin d\'être entendu\n• d\'alléger la charge, sans pression\n• de retrouver tes propres repères\n\nTu n\'as rien à prouver ici. Juste à te déposer.',
+    image_url:'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&h=340&fit=crop',
+    affiliate_link:'https://affiliationpro.cashflowecosysteme.com/ref/marie-soleil', status:'active'
   },
   {
     id:'demo-2', category_id:2, category_name:'Coaching', category_slug:'coaching', category_icon:'🤝',
-    title:'Coaching Personnel — 12 Semaines',
-    description_short:'Un accompagnement personnalisé pour transformer ta vie et atteindre tes objectifs.',
-    description_long:'Rejoins notre programme de coaching personnel de 12 semaines.\n\n🎯 12 sessions individuelles d\'une heure\n🎯 Plan d\'action personnalisé\n🎯 Suivi hebdomadaire\n🎯 Accès aux outils et ressources\n🎯 Communauté de soutien\n\nCe programme est conçu pour t\'aider à atteindre tes objectifs personnels et professionnels.',
-    image_url:'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=340&fit=crop',
-    price:1297, commission_n1:25, commission_n2:10, commission_n3:5,
-    affiliate_link:'https://affiliationpro.cashflowecosysteme.com/ref/coaching-12sem',
-    promo_code:'', sales_count:189, views_count:3100, status:'active'
+    title:'Geneviève — Coach de cœur',
+    description_short:'Pour celles qui veulent avancer en douceur, avec une présence qui croit en elles.',
+    description_long:'Je crois qu\'on va plus loin quand on se sent soutenue.\n\nMon accompagnement, c\'est :\n• une écoute vraie, sans jugement\n• des pas concrets, à ta mesure\n• une présence régulière entre nos rencontres\n\nOn avance ensemble, jamais seule.',
+    image_url:'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=600&h=340&fit=crop',
+    affiliate_link:'https://affiliationpro.cashflowecosysteme.com/ref/genevieve', status:'active'
   },
   {
     id:'demo-3', category_id:3, category_name:'Mieux-être', category_slug:'mieux-etre', category_icon:'🧘',
-    title:'Programme Méditation & Pleine Conscience',
-    description_short:'30 jours de méditation guidée pour retrouver la paix intérieure et la clarté mentale.',
-    description_long:'Un programme complet de 30 jours pour développer ta pratique de méditation.\n\n🧘 30 méditations guidées audio\n🧘 Exercices de respiration\n🧘 Journal de gratitude\n🧘 Techniques de pleine conscience\n🧘 Accès à vie\n\nCommence dès aujourd\'hui et transforme ton quotidien.',
+    title:'Amélie — Mieux-être & respiration',
+    description_short:'Retrouver le calme, un souffle à la fois. Des pratiques simples pour les journées chargées.',
+    description_long:'Je partage des pratiques douces de respiration et de présence, pensées pour celles qui n\'ont « pas le temps ».\n\n• Des pauses de quelques minutes\n• Des outils à garder pour toujours\n• Une approche tendre, jamais culpabilisante\n\nTon mieux-être compte autant que celui des autres.',
     image_url:'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&h=340&fit=crop',
-    price:97, commission_n1:25, commission_n2:10, commission_n3:5,
-    affiliate_link:'https://affiliationpro.cashflowecosysteme.com/ref/meditation-30j',
-    promo_code:'ZEN30', sales_count:567, views_count:8900, status:'active'
+    affiliate_link:'https://affiliationpro.cashflowecosysteme.com/ref/amelie', status:'active'
   },
   {
-    id:'demo-4', category_id:4, category_name:'Spiritualité', category_slug:'spiritualite', category_icon:'✨',
-    title:'Éveil Spirituel — Le Chemin Intérieur',
-    description_short:'Découvre les enseignements ancestraux pour éveiller ta conscience et ton plein potentiel.',
-    description_long:'Un voyage spirituel profond à travers les enseignements ancestraux.\n\n✨ 20 modules vidéo\n✨ Cérémonies guidées\n✨ Exercices de connexion\n✨ Communauté spirituelle\n✨ Certificat de complétion\n\nOuvre-toi à une nouvelle dimension de ta vie.',
-    image_url:'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600&h=340&fit=crop',
-    price:247, commission_n1:25, commission_n2:10, commission_n3:5,
-    affiliate_link:'https://affiliationpro.cashflowecosysteme.com/ref/eveil-spirituel',
-    promo_code:'', sales_count:278, views_count:4200, status:'active'
-  },
-  {
-    id:'demo-5', category_id:5, category_name:'Livres & Ebook', category_slug:'livres-ebook', category_icon:'📚',
-    title:'Ebook — Les Secrets de l\'Affiliation',
-    description_short:'Le guide ultime pour comprendre et maîtriser l\'affiliation. 200+ pages de stratégies avancées.',
-    description_long:'Un ebook complet de plus de 200 pages qui te révèle les secrets de l\'affiliation.\n\n📚 Stratégies avancées\n📚 Études de cas réels\n📚 Templates et outils\n📚 Erreurs à éviter\n📚 Plan d\'action 90 jours\n\nParfait pour les débutants comme pour les avancés.',
-    image_url:'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&h=340&fit=crop',
-    price:37, commission_n1:25, commission_n2:10, commission_n3:5,
-    affiliate_link:'https://affiliationpro.cashflowecosysteme.com/ref/ebook-secrets',
-    promo_code:'LECTEUR10', sales_count:823, views_count:12400, status:'active'
-  },
-  {
-    id:'demo-6', category_id:6, category_name:'Marketing digital', category_slug:'marketing-digital', category_icon:'📊',
-    title:'Masterclass — Publicité Facebook & Instagram',
-    description_short:'Maîtrise la publicité payante sur les réseaux sociaux avec des campagnes rentables.',
-    description_long:'Une masterclass complète sur la publicité payante.\n\n📊 Création de campagnes rentables\n📊 Ciblage avancé\n📊 Création de publicités percutantes\n📊 Optimisation et scale\n📊 Analyse des performances\n📊 Budget : de 5$ à 5000$/jour\n\nRejoins des centaines de marketers qui ont déjà transformé leurs résultats.',
-    image_url:'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=340&fit=crop',
-    price:197, commission_n1:25, commission_n2:10, commission_n3:5,
-    affiliate_link:'https://affiliationpro.cashflowecosysteme.com/ref/masterclass-pub',
-    promo_code:'LAUNCH50', sales_count:456, views_count:6800, status:'active'
+    id:'demo-4', category_id:4, category_name:'Thérapie', category_slug:'therapie', category_icon:'🌿',
+    title:'Lucie — Thérapeute en relation d\'aide',
+    description_short:'Un lieu sûr pour traverser ce qui est lourd, à deux, dans le respect de ton histoire.',
+    description_long:'J\'accueille ce que tu portes, sans te demander d\'aller plus vite que toi.\n\n• Un espace confidentiel et chaleureux\n• Le respect total de ton rythme\n• Une présence solide quand ça tangue\n\nTu mérites d\'être accompagnée, toi aussi.',
+    image_url:'https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=600&h=340&fit=crop',
+    affiliate_link:'https://affiliationpro.cashflowecosysteme.com/ref/lucie', status:'active'
   },
 ];
 
@@ -1235,9 +1192,9 @@ function renderProducts(products) {
   if (!products || products.length === 0) {
     grid.innerHTML = `
       <div class="empty-state">
-        <div class="icon">🔍</div>
-        <h3>Aucun produit trouvé</h3>
-        <p>Essayez de modifier vos filtres ou votre recherche pour découvrir nos produits.</p>
+        <div class="icon">💜</div>
+        <h3>Aucune praticienne ici pour l'instant</h3>
+        <p>Reviens bientôt — de nouvelles praticiennes rejoignent le Miroir régulièrement.</p>
       </div>`;
     return;
   }
@@ -1257,14 +1214,10 @@ function renderProducts(products) {
         <div class="card-title">${escHtml(p.title)}</div>
         <div class="card-desc">${escHtml(p.description_short)}</div>
       </div>
-      <div class="card-meta">
-        <span class="commission-badge">${p.commission_n1}% Commission</span>
-        <span class="card-price">${formatPrice(p.price)}</span>
-        <span class="card-sales">${p.sales_count} ventes</span>
-      </div>
       <div class="card-cta">
-        ${p.promo_code ? `<div class="card-promo-code" title="Utilise ce code à l'inscription">🎫 ${escHtml(p.promo_code)}</div>` : ''}
-        <a class="btn-promote" onclick="event.stopPropagation(); openModal('${p.id}');">Inscription gratuite</a>
+        ${p.affiliate_link
+          ? `<a class="btn-promote" href="${escHtml(p.affiliate_link)}" target="_blank" rel="noopener" onclick="event.stopPropagation();">Être accompagnée par elle</a>`
+          : `<a class="btn-promote" onclick="event.stopPropagation(); openModal('${p.id}');">Découvrir son espace</a>`}
       </div>
     </div>`;
   }).join('');
@@ -1301,31 +1254,13 @@ async function openModal(productId) {
   document.getElementById('modalTitle').textContent = p.title;
   document.getElementById('modalDesc').textContent = p.description_long || p.description_short || '';
 
-  document.getElementById('modalPrice').textContent = formatPrice(p.price);
-
-  const price = Number(p.price);
-  document.getElementById('comm1Amt').textContent = formatCommAmount(price, p.commission_n1);
-  document.getElementById('comm1Pct').textContent = p.commission_n1 + '%';
-  document.getElementById('comm2Amt').textContent = formatCommAmount(price, p.commission_n2);
-  document.getElementById('comm2Pct').textContent = p.commission_n2 + '%';
-  document.getElementById('comm3Amt').textContent = formatCommAmount(price, p.commission_n3);
-  document.getElementById('comm3Pct').textContent = p.commission_n3 + '%';
-
-  // Affiliate link
-  const affInput = document.getElementById('affiliateLink');
+  // Accompaniment link (her tracked NyXia Accompagnement link)
+  const cta = document.getElementById('modalCta');
   if (p.affiliate_link) {
-    affInput.value = p.affiliate_link;
+    cta.href = p.affiliate_link;
+    cta.style.display = 'block';
   } else {
-    affInput.value = "Rejoins l'Ambassadeur pour obtenir ton lien !";
-  }
-
-  // Promo code
-  const promoBox = document.getElementById('promoBox');
-  if (p.promo_code) {
-    promoBox.style.display = 'block';
-    document.getElementById('promoCode').textContent = p.promo_code;
-  } else {
-    promoBox.style.display = 'none';
+    cta.style.display = 'none';
   }
 
   document.getElementById('modalOverlay').classList.add('open');
@@ -1342,26 +1277,6 @@ document.getElementById('modalOverlay').addEventListener('click', (e) => {
   if (e.target === document.getElementById('modalOverlay')) closeModal();
 });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
-
-/* Copy affiliate link */
-document.getElementById('copyLinkBtn').addEventListener('click', () => {
-  const text = document.getElementById('affiliateLink').value;
-  if (!text || text.includes('Rejoins')) {
-    showToast('Rejoins d\'abord pour obtenir ton lien !');
-    return;
-  }
-  navigator.clipboard.writeText(text).then(() => {
-    showToast('✅ Lien copié !');
-  }).catch(() => {
-    const input = document.createElement('input');
-    input.value = text;
-    document.body.appendChild(input);
-    input.select();
-    document.execCommand('copy');
-    document.body.removeChild(input);
-    showToast('✅ Lien copié !');
-  });
-});
 
 /* ══════════════════════════════════════════════════════════════════
    FILTERS
@@ -1413,7 +1328,7 @@ function toggleNyxiaChat(){
   const c=document.getElementById('nyxia-chat');
   nxOpen=!nxOpen;
   c.style.display=nxOpen?'flex':'none';
-  if(nxOpen&&nxFirst){nxFirst=false;document.getElementById('nyxia-messages').innerHTML=`<div class="nx-welcome"><img src="/assets/NyXia.png" alt="NyXia"><h4>Salut, moi c'est NyXia</h4><p>Je suis l'agente IA de Publication-Web. Pose-moi une question ou dis-moi ce que tu cherches.</p><div class="nx-chips"><div class="nx-chip" onclick="nxQuick('Comment devenir ambassadeur ?')">Ambassadeur gratuit</div><div class="nx-chip" onclick="nxQuick('Comment fonctionne l\\'affiliation ?')">Comment ça marche</div><div class="nx-chip" onclick="nxQuick('J\\'ai une formation à vendre')">J'ai un produit</div></div></div>`;}
+  if(nxOpen&&nxFirst){nxFirst=false;document.getElementById('nyxia-messages').innerHTML=`<div class="nx-welcome"><img src="/assets/NyXia.png" alt="NyXia"><h4>Salut, moi c'est NyXia</h4><p>Je suis là pour te guider dans le Miroir des Aidantes. Dis-moi ce que tu cherches.</p><div class="nx-chips"><div class="nx-chip" onclick="nxQuick('Comment trouver une praticienne ?')">Trouver une praticienne</div><div class="nx-chip" onclick="nxQuick('Comment fonctionne l\\'accompagnement ?')">Comment ça marche</div><div class="nx-chip" onclick="nxQuick('Je suis praticienne, je veux mon espace')">Je suis praticienne</div></div></div>`;}
   const b=document.getElementById('nyxia-badge');b.style.display=nxOpen?'none':'none';
 }
 function nxQuick(t){document.getElementById('nyxia-input').value=t;sendNyxiaWidget();}
