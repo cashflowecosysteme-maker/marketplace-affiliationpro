@@ -936,27 +936,8 @@ button { cursor: pointer; font-family: inherit; border: none; outline: none; }
   <p class="bottom-footer-copy">✨ © 2026 <a href="https://nyxiapublicationweb.com/" target="_blank" rel="noopener" style="color:var(--primary-light);text-decoration:none;">Publication-Web</a> · Visionnaire depuis 1997 ✨</p>
 </footer>
 
-<!-- NyXia Chat Widget (same as nyxiapublicationweb.com) -->
-<button id="nyxia-toggle" onclick="toggleNyxiaChat()">
-  <img src="/assets/NyXia.png" alt="NyXia">
-  <span id="nyxia-badge" style="display:none">1</span>
-</button>
-<div id="nyxia-chat">
-  <div id="nyxia-header">
-    <img src="/assets/NyXia.png" alt="NyXia">
-    <div>
-      <div class="nx-name">NyXia</div>
-      <div class="nx-status"><span class="nx-dot"></span>En ligne</div>
-    </div>
-    <button onclick="toggleNyxiaChat()" style="background:none;border:none;color:var(--text-muted);font-size:20px;cursor:pointer;margin-left:auto;padding:4px 8px">✕</button>
-  </div>
-  <div id="nyxia-messages"></div>
-  <div id="nyxia-typing"><span class="nx-dots"><i></i><i></i><i></i></span></div>
-  <div id="nyxia-input-row">
-    <input type="text" id="nyxia-input" placeholder="Écris à NyXia..." onkeydown="if(event.key==='Enter')sendNyxiaWidget()">
-    <button onclick="sendNyxiaWidget()" id="nyxia-send">➤</button>
-  </div>
-</div>
+<!-- NyXia — assistante Jotform (bulle officielle) -->
+<script src='https://cdn.jotfor.ms/agent/embedjs/019ed1e097ba7b95a04af318fc04e1d76991/embed.js'></script>
 
 <script>
 /* NyXia Star Canvas */
@@ -1320,45 +1301,8 @@ function readURL() {
   document.getElementById('sortSelect').value = currentSort;
 }
 
-/* ══════════════════════════════════════════════════════════════════
-   NYXIA CHAT WIDGET (exact copy from nyxiapublicationweb.com)
-   ══════════════════════════════════════════════════════════════════ */
-let nxOpen=false,nxMsgs=[],nxFirst=true;
-function toggleNyxiaChat(){
-  const c=document.getElementById('nyxia-chat');
-  nxOpen=!nxOpen;
-  c.style.display=nxOpen?'flex':'none';
-  if(nxOpen&&nxFirst){nxFirst=false;document.getElementById('nyxia-messages').innerHTML=`<div class="nx-welcome"><img src="/assets/NyXia.png" alt="NyXia"><h4>Salut, moi c'est NyXia</h4><p>Je suis là pour te guider dans le Miroir des Aidantes. Dis-moi ce que tu cherches.</p><div class="nx-chips"><div class="nx-chip" onclick="nxQuick('Comment trouver une praticienne ?')">Trouver une praticienne</div><div class="nx-chip" onclick="nxQuick('Comment fonctionne l\\'accompagnement ?')">Comment ça marche</div><div class="nx-chip" onclick="nxQuick('Je suis praticienne, je veux mon espace')">Je suis praticienne</div></div></div>`;}
-  const b=document.getElementById('nyxia-badge');b.style.display=nxOpen?'none':'none';
-}
-function nxQuick(t){document.getElementById('nyxia-input').value=t;sendNyxiaWidget();}
-function sendNyxiaWidget(){
-  const inp=document.getElementById('nyxia-input');
-  const text=inp.value.trim();if(!text)return;
-  inp.value='';
-  const msgs=document.getElementById('nyxia-messages');
-  const w=msgs.querySelector('.nx-welcome');if(w)w.remove();
-  const now=new Date().toLocaleTimeString('fr-CA',{hour:'2-digit',minute:'2-digit'});
-  msgs.innerHTML+=`<div class="nx-msg user"><div class="nx-bubble">${text.replace(/</g,'&lt;')}</div><div class="nx-time">${now}</div></div>`;
-  nxMsgs.push({role:'user',content:text});
-  document.getElementById('nyxia-typing').style.display='flex';
-  document.getElementById('nyxia-send').disabled=true;
-  msgs.scrollTop=msgs.scrollHeight;
-  fetch('https://nyxiapublicationweb.com/api/client-chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:nxMsgs.slice(-20)})})
-  .then(r=>r.json()).then(d=>{
-    document.getElementById('nyxia-typing').style.display='none';
-    document.getElementById('nyxia-send').disabled=false;
-    if(d.content){
-      msgs.innerHTML+=`<div class="nx-msg bot"><div class="nx-bubble">${d.content.replace(/\n/g,'<br>')}</div><div class="nx-time">${now}</div></div>`;
-      nxMsgs.push({role:'assistant',content:d.content});
-    }
-    msgs.scrollTop=msgs.scrollHeight;
-  }).catch(()=>{
-    document.getElementById('nyxia-typing').style.display='none';
-    document.getElementById('nyxia-send').disabled=false;
-    msgs.innerHTML+=`<div class="nx-msg bot"><div class="nx-bubble">Erreur de connexion. Réessaie.</div></div>`;
-  });
-}
+/* La bulle de chat est maintenant gérée par l'assistante NyXia de Jotform
+   (script d'intégration ajouté en fin de page). */
 
 /* ══════════════════════════════════════════════════════════════════
    INIT
